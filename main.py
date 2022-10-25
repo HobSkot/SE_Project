@@ -13,7 +13,7 @@ video.playVideo()
 
 while choice != 6:
   
-  choice = input("1: Login\n2: Create new account\n3: Connect to other InCollege users\n4. Useful Links\n5. Important Links\n\n")
+  choice = input("1: reLogin\n2: Create new account\n3: Connect to other InCollege users\n4. Useful Links\n5. Important Links\n\n")
   if (choice == "5"):
     important_links.importantLinks()
   if (choice == "4"): # Useful Links
