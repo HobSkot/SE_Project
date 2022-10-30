@@ -1,28 +1,36 @@
 import skill
 from profiles import edit_profile_menu
-import job, connect,important_links, friendRquest, viewProfiles, viewYourProfile
+import jobSearch, connect,important_links, friendRquest, viewProfiles, viewYourProfile
 from show_network import show_network
 
 def homepage(username, log_in):
   choice2 = 1
   while (choice2 != 0):
     try:
-      choice2 = int(input("[1] job search/internship\n[2] Find someone you know\n[3] Learn a new skill\n[4] General Links\n[5] Look at friends\n[6] Edit User Profile\n[7] View your friend's profiles\n[8] View your profile\n[0] Logout\n"))
+      choice2 = int(input("[1] job search/internship\n[2] Find someone you know\n[3] Learn a new skill\n[4] General Links\n[5] Look at friends\n[6] Edit User Profile\n[7] View your friend's profiles\n[8] View your profile\n[0] Logout\nHow can I help you: "))
       if (choice2 == 1):
-        job.job(username, log_in);
+        print("\n")
+        jobSearch.job(username, log_in);
       elif (choice2 == 2):
+        print("\n")
         connect.findByCon(username)
       elif (choice2 == 3):
+        print("\n")
         skill.learnSkill();
       elif(choice2 == 4):
+        print("\n")
         important_links.importantLinks(log_in, username)
       elif(choice2 == 5):
+        print("\n")
         show_network(username,log_in)
       elif(choice2 == 6):
+        print("\n")
         edit_profile_menu(username)
       elif(choice2 == 7):
+        print("\n")
         viewProfiles.viewFriendProfile(username)
       elif(choice2 == 8):
+        print("\n")
         viewYourProfile.viewProfile(username)
       elif (choice2 == 0):
         break
