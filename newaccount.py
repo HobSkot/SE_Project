@@ -3,7 +3,7 @@
 import verifi, json
 
 
-def newaccount(username, newPassword, first, last, university, major):
+def newaccount(username, newPassword, first, last, university, major, member):
 
     with open('students.json') as f:
         data = json.load(f)
@@ -33,7 +33,7 @@ def newaccount(username, newPassword, first, last, university, major):
       newPassword = input("Please create a strong password: ")
       boolNum = verifi.verifiPass(newPassword)
       
-    tempDict = {"username":username.lower(),"password":newPassword,"first":first.lower(), "last":last.lower(), "university":university.lower(), "major":major.lower()}
+    tempDict = {"username":username.lower(),"password":newPassword,"first":first.lower(), "last":last.lower(), "university":university.lower(), "major":major.lower(), "Membership":member.lower()}
     data['studentsLogin'].append(tempDict) # add new Info to database 
     
     with open('userSetting.json') as f:
@@ -59,4 +59,3 @@ def newaccount(username, newPassword, first, last, university, major):
         json.dump(friend, fp)
 
     return 0
-

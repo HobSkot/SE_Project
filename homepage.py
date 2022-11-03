@@ -1,13 +1,15 @@
 import skill
 from profiles import edit_profile_menu
-import jobSearch, connect,important_links, friendRquest, viewProfiles, viewYourProfile
+import jobSearch, connect,important_links, viewProfiles, viewYourProfile
 from show_network import show_network
+import message
 
 def homepage(username, log_in):
+  message.messageNotification(username)
   choice2 = 1
   while (choice2 != 0):
     try:
-      choice2 = int(input("[1] job search/internship\n[2] Find someone you know\n[3] Learn a new skill\n[4] General Links\n[5] Look at friends\n[6] Edit User Profile\n[7] View your friend's profiles\n[8] View your profile\n[0] Logout\nHow can I help you: "))
+      choice2 = int(input("\n\n[1] job search/internship\n[2] Find someone you know\n[3] Learn a new skill\n[4] General Links\n[5] Look at friends\n[6] Edit User Profile\n[7] View your friend's profiles\n[8] View your profile\n[9] Send message\n[0] Logout\nHow can I help you: "))
       if (choice2 == 1):
         print("\n")
         jobSearch.job(username, log_in);
@@ -32,6 +34,8 @@ def homepage(username, log_in):
       elif(choice2 == 8):
         print("\n")
         viewYourProfile.viewProfile(username)
+      elif(choice2 == 9):
+        message.message(username)
       elif (choice2 == 0):
         break
       else:

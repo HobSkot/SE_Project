@@ -30,7 +30,15 @@ while choice != 6:
     last = input("Enter your last name: ")
     univ = input("Enter your university: ")
     major = input("Enter your major: ")
-    newaccount.newaccount(name, password,first,last, univ,major)
+    membership = input("Would you like to join our membership for $10/month(Y/N):")
+    if membership.lower() == "y":
+        member = "Plus"
+    elif membership.lower() == "n":
+        member = "Standard"
+    else:
+        print("Invalid input")
+
+    newaccount.newaccount(name, password,first,last, univ,major,member)
     print("Congrats on your new account!")
     #Continue from here.
     break
@@ -41,6 +49,8 @@ while choice != 6:
       if result == 0:
           log_in = True
           homepage.homepage(username,log_in) 
+
+
 
 
 
