@@ -17,9 +17,8 @@ def lastApplyNotification(username):
   sevenDaysAgo = currentTime - 604800  # 7 days ago = 604800 seconds.
   if (selectedStudent['lastApplyDate'] < sevenDaysAgo): # closer to now, bigger the number is.
     print("Remember – you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")
-  # Now that user is logged in, record login date
-  #selectedStudent['lastApplyDate'] = int(time.time()) # code line to update time.
-  #write
+  return
+
 
 
 
@@ -38,4 +37,5 @@ def updateApplyTime(username):
     selectedStudent['lastApplyDate'] = int(time.time())
     with open('students.json', 'w') as rea:
       json.dump(studentDataCollection, rea)
+    return
     
