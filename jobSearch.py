@@ -1,11 +1,13 @@
 import datetime, json
 from lastApply import updateApplyTime
+from jobsAppliedNotification import jobsAppliedNotification
 
 def job(username, log_in):
     JobRemovedNotification(username)
     choice = 1
     while (choice > 0 and choice < 11):
         PrintListOfTitles(username)
+        jobsAppliedNotification(username)
         choice = int(
             input(
                 "[1]: Post a job\n[2]: Details of the job you interested in\n[3]: Delete a job\n[4]: Apply for a job\n[5]: List of applied job\n[6]: List of unapplied job\n[7]: Saving job posting for later\n[8]: List of saved jobs\n[9]: Remove a job from your job save list\n[10]: Return to homepage\n"
