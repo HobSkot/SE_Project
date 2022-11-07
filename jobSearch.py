@@ -1,7 +1,5 @@
-import datetime
-import json
-
-
+import datetime, json
+from lastApply import updateApplyTime
 
 def job(username, log_in):
     JobRemovedNotification(username)
@@ -211,10 +209,7 @@ def DeleteJob(username):
       
     
     
-    
-      
-      
-   
+
 
 
 def ApplyJob(username):
@@ -225,7 +220,9 @@ def ApplyJob(username):
         data = json.load(f)
     with open('jobApplications.json') as f:
         application = json.load(f)
-
+    # comments added by cory - can uncomment 2 lines below to update Applytime here.
+    # print("earlier than should... updating Applytime?\n") 
+    # updateApplyTime(username)  
     size = len(data['jobPostings'])
     # Check if there is any job postings
     if (size == 0):
@@ -327,6 +324,7 @@ def ApplyJob(username):
         "status": "open"
     }
     application['jobApplications'].append(tempDict)
+    updateApplyTime(username)
 
     with open('jobApplications.json', "w") as f:
         json.dump(application, f)

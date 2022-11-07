@@ -1,6 +1,6 @@
 # This file is to create a new InCollege account
 
-import verifi, json
+import verifi, json, time
 
 
 def newaccount(username, newPassword, first, last, university, major, member):
@@ -33,7 +33,7 @@ def newaccount(username, newPassword, first, last, university, major, member):
       newPassword = input("Please create a strong password: ")
       boolNum = verifi.verifiPass(newPassword)
       
-    tempDict = {"username":username.lower(),"password":newPassword,"first":first.lower(), "last":last.lower(), "university":university.lower(), "major":major.lower(), "Membership":member.lower()}
+    tempDict = {"username":username.lower(),"password":newPassword,"first":first.lower(), "last":last.lower(), "university":university.lower(), "major":major.lower(), "Membership":member.lower(), "lastLoginDate": int(time.time())}
     data['studentsLogin'].append(tempDict) # add new Info to database 
     
     with open('userSetting.json') as f:
