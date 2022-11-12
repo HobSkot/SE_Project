@@ -1,6 +1,8 @@
 import datetime, json
 from lastApply import updateApplyTime
 from jobsAppliedNotification import jobsAppliedNotification
+from notifys import getTitle
+
 
 def job(username, log_in):
     JobRemovedNotification(username)
@@ -31,52 +33,62 @@ def job(username, log_in):
         elif (choice == 9):
             RemovingSavedJob(username)
         elif (choice == 10):
-          return  
+            return
         else:
             print("Invalid Input! Try Again\n\n")
             choice = 1
 
 
 def PostJob(username, log_in):
-  data ={}
-  with open('jobs.json') as f:
+    data = {}
+    with open('jobs.json') as f:
         data = json.load(f)
-  choice4 = 1
-  while (choice4 > 0 and choice4 < 3):
-    try:
-      choice4 = int(input("1: Post a job\n2: Return to previous page\n"))
-    except ValueError:
-      print("Input must be an integer! Try Again.\n")
-      choice4 = 1
-      continue
-      
-    if (choice4 < 1 or choice4 > 2):
-      print("Invalid Input! Try Again")
-      choice4 = 1
-      continue
+    choice4 = 1
+    while (choice4 > 0 and choice4 < 3):
+        try:
+            choice4 = int(input("1: Post a job\n2: Return to previous page\n"))
+        except ValueError:
+            print("Input must be an integer! Try Again.\n")
+            choice4 = 1
+            continue
 
-      
-    if (choice4 == 1): 
-      if (len(data['jobPostings']) == 10):
-        print("No more than 10 jobs may be posted, please come back later.\n\n")
-        return
-      Title = input("Create a Job title: ")
-      Description = input("Create a Description: ")
-      Employer = input("List the Employer: ")
-      Location = input("List the job Location: ")
-      Salary = input("List the Salary: ")
-      print("\n")
-      PostedBy = username
-      
-      tempDict = {"Title":Title, "Description":Description, "Employer":Employer, "Location":Location, "Salary":Salary,"PostedBy":PostedBy} 
-      data['jobPostings'].append(tempDict)
-  
-      with open('jobs.json', "w") as f:
-        json.dump(data, f)
-        return
-  
-    if (choice4 == 2):
-        return
+        if (choice4 < 1 or choice4 > 2):
+            print("Invalid Input! Try Again")
+            choice4 = 1
+            continue
+
+        if (choice4 == 1):
+            if (len(data['jobPostings']) == 10):
+                print(
+                    "No more than 10 jobs may be posted, please come back later.\n\n"
+                )
+                return
+            Title = input("Create a Job title: ")
+            Description = input("Create a Description: ")
+            Employer = input("List the Employer: ")
+            Location = input("List the job Location: ")
+            Salary = input("List the Salary: ")
+            print("\n")
+            PostedBy = username
+            getTitle(Title)
+
+            tempDict = {
+                "Title": Title,
+                "Description": Description,
+                "Employer": Employer,
+                "Location": Location,
+                "Salary": Salary,
+                "PostedBy": PostedBy
+            }
+            data['jobPostings'].append(tempDict)
+
+            with open('jobs.json', "w") as f:
+                json.dump(data, f)
+                return
+
+        if (choice4 == 2):
+            return
+
 
 def PrintListOfTitles(username):
     data = {}
@@ -88,8 +100,10 @@ def PrintListOfTitles(username):
     if (len(data['jobPostings']) == 0):
         print("There are no job available currently\n\n")
     else:
-        print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n" +
-        "List of available job titles\n" +  "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n\n")
+        print(
+            "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n" +
+            "List of available job titles\n" +
+            "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n\n")
         i = 1
         printed = False
         for item in data['jobPostings']:
@@ -147,71 +161,86 @@ def JobDetails():
                     return
 
 
+def deleted_job_notification():
+    print("lol")
+    #find job being deleted
+
+
 def DeleteJob(username):
-  data = {}
-  application ={}
-  savedJobs = {}
-  with open('jobs.json') as f:
-    data = json.load(f)
-  with open('jobApplications.json') as f:
-    application = json.load(f)
-  with open('savedJobs.json') as f:
-    savedJobs = json.load(f)
+    data = {}
+    application = {}
+    savedJobs = {}
+    with open('jobs.json') as f:
+        data = json.load(f)
+    with open('jobApplications.json') as f:
+        application = json.load(f)
+    with open('savedJobs.json') as f:
+        savedJobs = json.load(f)
 
-  arrayOfSavedJobs = savedJobs['savedJobs']
-  arrayOfJobs = data['jobPostings']
-  arrayOfApplications = application['jobApplications']
-  
-  size = len(arrayOfJobs)
-  if (size == 0):
-    print("No job posting currently. Come back later!\n\n")
-    return 
+    arrayOfSavedJobs = savedJobs['savedJobs']
+    arrayOfJobs = data['jobPostings']
+    arrayOfApplications = application['jobApplications']
 
-  #Find the index of the job to be deleted  
-  choice = 1
-  while (choice>= 0 and choice < size+1):
-    try:
-      choice = int(input("Which job posting do you want to remove?(1-" + str(size) +") Enter 0 to return to previous page: "))
-    except ValueError:
-      print("\nInput must be an integer! Try Again\n")
-      choice = 1
-      continue
-    if (choice < 0 or choice > size):
-      print("\nInvalid input! Try Again\n")
-      choice = 1
-      continue
-    if (choice == 0):
-      return
-    if (username != arrayOfJobs[choice-1]['PostedBy']):
-      print("\nYou are not allowed to delete job postings posted by other users. Try again.\n")
-      choice = 1
-      continue
-    break
+    size = len(arrayOfJobs)
+    if (size == 0):
+        print("No job posting currently. Come back later!\n\n")
+        return
 
-  deletedJob = arrayOfJobs[choice-1]
-  #remove the job from the jobs.json  
-  arrayOfJobs.pop(choice-1)
+    #Find the index of the job to be deleted
+    choice = 1
+    while (choice >= 0 and choice < size + 1):
+        try:
+            choice = int(
+                input("Which job posting do you want to remove?(1-" +
+                      str(size) + ") Enter 0 to return to previous page: "))
+        except ValueError:
+            print("\nInput must be an integer! Try Again\n")
+            choice = 1
+            continue
+        if (choice < 0 or choice > size):
+            print("\nInvalid input! Try Again\n")
+            choice = 1
+            continue
+        if (choice == 0):
+            return
+        if (username != arrayOfJobs[choice - 1]['PostedBy']):
+            print(
+                "\nYou are not allowed to delete job postings posted by other users. Try again.\n"
+            )
+            choice = 1
+            continue
+        break
 
-  #change the status of the job from "open" to "closed"
-  for item in arrayOfApplications:
-    if (item['title'] == deletedJob['Title'] and item['employer'] == deletedJob['Employer'] and item['postedBy'] == deletedJob['PostedBy']):
-      item['status'] = "closed"
+    deletedJob = arrayOfJobs[choice - 1]
+    #remove the job from the jobs.json
+    arrayOfJobs.pop(choice - 1)
 
-  for item in arrayOfSavedJobs:
-    if (item['title'] == deletedJob['Title'] and item['employer'] == deletedJob['Employer'] and item['postedBy'] == deletedJob['PostedBy']):
-      item['status'] = "removed"
-      
-        
-  with open('jobApplications.json', 'w') as f:
-    json.dump(application, f)
-  with open('jobs.json', 'w') as f:
-    json.dump(data, f)
-  with open('savedJobs.json', 'w') as f:
-    json.dump(savedJobs, f)
-      
-    
-    
+    #change the status of the job from "open" to "closed"
+    for item in arrayOfApplications:
+        if (item['title'] == deletedJob['Title']
+                and item['employer'] == deletedJob['Employer']
+                and item['postedBy'] == deletedJob['PostedBy']):
+          item['status'] = "closed"
+          tempName = item['applicant'] #username of jobApplicant
+          with open('studentNotification.json') as kek:
+            kekNotification = json.load(kek)
+          kekNotification['studentNotifications'][tempName].append("A job that you applied for has been deleted: " + item['title'])
+          with open('studentNotification.json', "w") as kak:
+            json.dump(kekNotification, kak)
+              
+            # in jobsApllication
+    for item in arrayOfSavedJobs:
+        if (item['title'] == deletedJob['Title']
+                and item['employer'] == deletedJob['Employer']
+                and item['postedBy'] == deletedJob['PostedBy']):
+            item['status'] = "removed"
 
+    with open('jobApplications.json', 'w') as f:
+        json.dump(application, f)
+    with open('jobs.json', 'w') as f:
+        json.dump(data, f)
+    with open('savedJobs.json', 'w') as f:
+        json.dump(savedJobs, f)
 
 
 def ApplyJob(username):
@@ -223,8 +252,8 @@ def ApplyJob(username):
     with open('jobApplications.json') as f:
         application = json.load(f)
     # comments added by cory - can uncomment 2 lines below to update Applytime here.
-    # print("earlier than should... updating Applytime?\n") 
-    # updateApplyTime(username)  
+    # print("earlier than should... updating Applytime?\n")
+    # updateApplyTime(username)
     size = len(data['jobPostings'])
     # Check if there is any job postings
     if (size == 0):
@@ -331,226 +360,251 @@ def ApplyJob(username):
     with open('jobApplications.json', "w") as f:
         json.dump(application, f)
 
+
 def JobRemovedNotification(username):
-  i = 0
-  application = {}
-  with open('jobApplications.json') as f:
-    application = json.load(f)
-  for item in application['jobApplications']:
-    if (item['applicant'] == username and item['status'] == "closed"):
-      print("The job that you applied to have been removed from the system.\nDetails of the job:\n\n")
-      print("Job Title: " + item['title'] + "\nEmployer: " + item['employer'] + "\nPosted By: " + item['postedBy'] + "\n\n")
-      application['jobApplications'].pop(i)
-      break
-    i+=1
-  
-
-  with open('jobApplications.json', 'w') as f:
-    json.dump(application, f)
-
-def listOfAppliedJob(username):
-  application = {}
-  with open('jobApplications.json') as f:
-    application = json.load(f)
-  arrayOfApplications = application['jobApplications']
-  
-  if (len(arrayOfApplications) == 0):
-    print("User has not applied for any job yet\n\n")
-    return
-    
-  check = False
-  for item in arrayOfApplications: 
-    if (item['applicant'] == username):
-      check = True
-
-  if (not check):
-    print("User has not applied for any job yet\n\n")
-    return
-
-  i = 1
-  print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" + "\nList of applied job titles\n" +"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n\n")
-  for item in arrayOfApplications:
-    if (item['applicant'] == username and item['status'] == 'open'):
-      print("{" +str(i) + "} " + "Job Title: " + item['title'] + "\n\tEmployer: " + item['employer'] + "\n\tPosted By: " + item['postedBy'] + "\n")
-      i += 1
-
-def listOfUnappliedJob(username):
-  data = {}
-  application = {}
-  with open('jobApplications.json') as f:
-    application = json.load(f)
-  with open('jobs.json') as f:
-    data = json.load(f)
-
-  arrayOfApplications = application['jobApplications']
-  arrayOfJobs = data['jobPostings']
-  copyOfJobsArray = arrayOfJobs.copy()
-
-  if (len(arrayOfJobs) == 0):
-    print("No job is available at the moment. Come back later\n\n")
-    return
-    
-
-  for item in arrayOfApplications:
-    if (item['applicant'] == username and item['status'] == 'open'):
-      i = 0
-      for job in copyOfJobsArray:
-        if(job["Title"] == item['title'] and job["Employer"] == item['employer'] and job["PostedBy"] == item['postedBy']):
-          copyOfJobsArray.pop(i)
+    i = 0
+    application = {}
+    with open('jobApplications.json') as f:
+        application = json.load(f)
+    for item in application['jobApplications']:
+        if (item['applicant'] == username and item['status'] == "closed"):
+            print(
+                "The job that you applied to have been removed from the system.\nDetails of the job:\n\n"
+            )
+            print("Job Title: " + item['title'] + "\nEmployer: " +
+                  item['employer'] + "\nPosted By: " + item['postedBy'] +
+                  "\n\n")
+            application['jobApplications'].pop(i)
+            break
         i += 1
 
-  i = 1
-  print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" + "\nList of Unapplied jobs\n" +"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n\n")
-  for item in copyOfJobsArray:
-    print("{" +str(i) + "} " + "Job Title: " + item['Title'] + "\n\tEmployer: " + item['Employer'] + "\n\tPosted By: " + item['PostedBy'] + "\n")
-    i += 1      
+    with open('jobApplications.json', 'w') as f:
+        json.dump(application, f)
+
+
+def listOfAppliedJob(username):
+    application = {}
+    with open('jobApplications.json') as f:
+        application = json.load(f)
+    arrayOfApplications = application['jobApplications']
+
+    if (len(arrayOfApplications) == 0):
+        print("User has not applied for any job yet\n\n")
+        return
+
+    check = False
+    for item in arrayOfApplications:
+        if (item['applicant'] == username):
+            check = True
+
+    if (not check):
+        print("User has not applied for any job yet\n\n")
+        return
+
+    i = 1
+    print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" +
+          "\nList of applied job titles\n" +
+          "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n\n")
+    for item in arrayOfApplications:
+        if (item['applicant'] == username and item['status'] == 'open'):
+            print("{" + str(i) + "} " + "Job Title: " + item['title'] +
+                  "\n\tEmployer: " + item['employer'] + "\n\tPosted By: " +
+                  item['postedBy'] + "\n")
+            i += 1
+
+
+def listOfUnappliedJob(username):
+    data = {}
+    application = {}
+    with open('jobApplications.json') as f:
+        application = json.load(f)
+    with open('jobs.json') as f:
+        data = json.load(f)
+
+    arrayOfApplications = application['jobApplications']
+    arrayOfJobs = data['jobPostings']
+    copyOfJobsArray = arrayOfJobs.copy()
+
+    if (len(arrayOfJobs) == 0):
+        print("No job is available at the moment. Come back later\n\n")
+        return
+
+    for item in arrayOfApplications:
+        if (item['applicant'] == username and item['status'] == 'open'):
+            i = 0
+            for job in copyOfJobsArray:
+                if (job["Title"] == item['title']
+                        and job["Employer"] == item['employer']
+                        and job["PostedBy"] == item['postedBy']):
+                    copyOfJobsArray.pop(i)
+                i += 1
+
+    i = 1
+    print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" +
+          "\nList of Unapplied jobs\n" +
+          "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n\n")
+    for item in copyOfJobsArray:
+        print("{" + str(i) + "} " + "Job Title: " + item['Title'] +
+              "\n\tEmployer: " + item['Employer'] + "\n\tPosted By: " +
+              item['PostedBy'] + "\n")
+        i += 1
+
+
 def JobSaving(username):
-  jobs = {}
-  savedJobs = {}
+    jobs = {}
+    savedJobs = {}
 
-  with open('jobs.json') as f:
-      jobs = json.load(f)
-  with open('savedJobs.json') as f:
-      savedJobs = json.load(f)
+    with open('jobs.json') as f:
+        jobs = json.load(f)
+    with open('savedJobs.json') as f:
+        savedJobs = json.load(f)
 
-  size = len(jobs['jobPostings'])
-  # Check if there is any job postings
-  if (size == 0):
-      print("Currently no job available. Please come back later.\n\n")
-      return
+    size = len(jobs['jobPostings'])
+    # Check if there is any job postings
+    if (size == 0):
+        print("Currently no job available. Please come back later.\n\n")
+        return
 
-  #The purpose of this while loop is to get the index of the job from the job.json
-  index = 1
-  while (index >= 0 and index < size + 1):
+    #The purpose of this while loop is to get the index of the job from the job.json
+    index = 1
+    while (index >= 0 and index < size + 1):
 
-      try:
-          index = int(
-              input("Which job do you want to save for later? (1-" + str(size) +
-                    "). Enter 0 to return to previous page otherwise\n"))
-      except ValueError:
-          print("Input must be an integer! Try again\n")
-          index = 1
-          continue
-      # Validate the input
-      if (index < 0 or index > size):
-          print("Invalid Input! Please only enter (1-" + str(size) + ")\n\n")
-          index = 1
-          continue
+        try:
+            index = int(
+                input("Which job do you want to save for later? (1-" +
+                      str(size) +
+                      "). Enter 0 to return to previous page otherwise\n"))
+        except ValueError:
+            print("Input must be an integer! Try again\n")
+            index = 1
+            continue
+        # Validate the input
+        if (index < 0 or index > size):
+            print("Invalid Input! Please only enter (1-" + str(size) + ")\n\n")
+            index = 1
+            continue
 
-      #return to previous page
-      if (index == 0):
-          return
-      # Check if the applicant is the person who posted the job posting
-      if (username == jobs['jobPostings'][index - 1]['PostedBy']):
-          print(
-              "Sorry, you are not allowed to save the job that you have posted\n\n"
-          )
-          continue
-      break
+        #return to previous page
+        if (index == 0):
+            return
+        # Check if the applicant is the person who posted the job posting
+        if (username == jobs['jobPostings'][index - 1]['PostedBy']):
+            print(
+                "Sorry, you are not allowed to save the job that you have posted\n\n"
+            )
+            continue
+        break
 
-  # the job object that we found from the job.json
-  job = jobs['jobPostings'][index - 1]
+    # the job object that we found from the job.json
+    job = jobs['jobPostings'][index - 1]
 
-  # this for loop intends to prevent the applicant to apply to the same job twice
-  for item in savedJobs['savedJobs']:
-      if (item['username'] == username and item['title'] == job['Title']
-              and item['employer'] == job['Employer']
-              and item['postedBy'] == job['PostedBy']):
-          print(
-              "You are not allowed to save the same job more than once.\nPlease come back later.\n\n"
-          )
-          return
+    # this for loop intends to prevent the applicant to apply to the same job twice
+    for item in savedJobs['savedJobs']:
+        if (item['username'] == username and item['title'] == job['Title']
+                and item['employer'] == job['Employer']
+                and item['postedBy'] == job['PostedBy']):
+            print(
+                "You are not allowed to save the same job more than once.\nPlease come back later.\n\n"
+            )
+            return
 
-  tempDict = {
-      "username": username,
-      "title": job['Title'],
-      "employer": job['Employer'],
-      "postedBy": job['PostedBy'],
-      "status": 'open'
-  }
-  savedJobs['savedJobs'].append(tempDict)
+    tempDict = {
+        "username": username,
+        "title": job['Title'],
+        "employer": job['Employer'],
+        "postedBy": job['PostedBy'],
+        "status": 'open'
+    }
+    savedJobs['savedJobs'].append(tempDict)
 
-  with open('savedJobs.json', "w") as f:
-      json.dump(savedJobs, f)
-    
+    with open('savedJobs.json', "w") as f:
+        json.dump(savedJobs, f)
+
 
 def listOfSavedJobs(username):
-  data = {}
-  with open('savedJobs.json') as f:
-    data = json.load(f)
+    data = {}
+    with open('savedJobs.json') as f:
+        data = json.load(f)
 
-  arrayOfSavedJobs = data['savedJobs']
-    
-  if (len(arrayOfSavedJobs) == 0):
-    print("User has not saved any job yet\n\n")
-    return
-    
-  check = False
-  for item in arrayOfSavedJobs: 
-    if (item['username'] == username):
-      check = True
+    arrayOfSavedJobs = data['savedJobs']
 
-  if (not check):
-    print("User has not saved any job yet\n\n")
-    return
+    if (len(arrayOfSavedJobs) == 0):
+        print("User has not saved any job yet\n\n")
+        return
 
-  i = 1
-  print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" + "\nList of Saved Jobs\n" +"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n\n")
-  for item in arrayOfSavedJobs:
-    if (item['username'] == username and item['status'] == 'open'):
-      print("{" +str(i) + "} " + "Job Title: " + item['title'] + "\n\tEmployer: " + item['employer'] + "\n\tPosted By: " + item['postedBy'] + "\n")
-      i += 1
-    elif (item['username'] == username and item['status'] == 'removed'):
-      print("{" +str(i) + "} " + "Job Title: " + item['title'] + "\n\tEmployer: " + item['employer'] + "\n\tPosted By: " + item['postedBy'] + "\n(Removed)" +"\n")
-      i += 1
+    check = False
+    for item in arrayOfSavedJobs:
+        if (item['username'] == username):
+            check = True
+
+    if (not check):
+        print("User has not saved any job yet\n\n")
+        return
+
+    i = 1
+    print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" +
+          "\nList of Saved Jobs\n" +
+          "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \n\n")
+    for item in arrayOfSavedJobs:
+        if (item['username'] == username and item['status'] == 'open'):
+            print("{" + str(i) + "} " + "Job Title: " + item['title'] +
+                  "\n\tEmployer: " + item['employer'] + "\n\tPosted By: " +
+                  item['postedBy'] + "\n")
+            i += 1
+        elif (item['username'] == username and item['status'] == 'removed'):
+            print("{" + str(i) + "} " + "Job Title: " + item['title'] +
+                  "\n\tEmployer: " + item['employer'] + "\n\tPosted By: " +
+                  item['postedBy'] + "\n(Removed)" + "\n")
+            i += 1
+
+
 def RemovingSavedJob(username):
-  savedJobs = {}
-  with open('savedJobs.json') as f:
-      savedJobs = json.load(f)
-  size = 0
-  for item in savedJobs['savedJobs']:
-    if (item['username'] == username):
-      size += 1
-  # Check if there is any job postings
-  if (size == 0):
-      print("User has not saved any job posting yet.\n\n")
-      return
+    savedJobs = {}
+    with open('savedJobs.json') as f:
+        savedJobs = json.load(f)
+    size = 0
+    for item in savedJobs['savedJobs']:
+        if (item['username'] == username):
+            size += 1
+    # Check if there is any job postings
+    if (size == 0):
+        print("User has not saved any job posting yet.\n\n")
+        return
 
-  #The purpose of this while loop is to get the index of the job from the job.json
-  index = 1
-  while (index >= 0 and index < size + 1):
+    #The purpose of this while loop is to get the index of the job from the job.json
+    index = 1
+    while (index >= 0 and index < size + 1):
 
-      try:
-          index = int(
-              input("Which job do you want to remove from your save list? (1-" + str(size) +
+        try:
+            index = int(
+                input(
+                    "Which job do you want to remove from your save list? (1-"
+                    + str(size) +
                     "). Enter 0 to return to previous page otherwise\n"))
-      except ValueError:
-          print("Input must be an integer! Try again\n")
-          index = 1
-          continue
-      # Validate the input
-      if (index < 0 or index > size):
-          print("Invalid Input! Please only enter (1-" + str(size) + ")\n\n")
-          index = 1
-          continue
+        except ValueError:
+            print("Input must be an integer! Try again\n")
+            index = 1
+            continue
+        # Validate the input
+        if (index < 0 or index > size):
+            print("Invalid Input! Please only enter (1-" + str(size) + ")\n\n")
+            index = 1
+            continue
 
-      #return to previous page
-      if (index == 0):
-          return
-      break
+        #return to previous page
+        if (index == 0):
+            return
+        break
 
-  # the job object that we found from the job.json
-  j = 0
-  for item in savedJobs['savedJobs']: 
-    if (item['username'] == username and index == 1):
-      savedJobs['savedJobs'].pop(j)
-      break
-    if (item['username'] == username and index > 1):
-      index -= 1
-    j += 1
-      
-    
+    # the job object that we found from the job.json
+    j = 0
+    for item in savedJobs['savedJobs']:
+        if (item['username'] == username and index == 1):
+            savedJobs['savedJobs'].pop(j)
+            break
+        if (item['username'] == username and index > 1):
+            index -= 1
+        j += 1
 
-  with open('savedJobs.json', "w") as f:
-      json.dump(savedJobs, f)
-  
+    with open('savedJobs.json', "w") as f:
+        json.dump(savedJobs, f)

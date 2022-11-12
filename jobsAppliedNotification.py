@@ -8,6 +8,5 @@ def jobsAppliedNotification(username):
   for i in data:
     if i['applicant'] == username:
       count += 1
-
   print("You have currently applied for " + str(count) + " jobs.\n")
   return

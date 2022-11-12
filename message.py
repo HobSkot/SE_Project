@@ -96,6 +96,19 @@ def checkMember(sender):
               return False
 
 # messageNotification function is being called at the very beginning of homepage.py
+def checkMessages(username):
+  with open('inbox.json') as f:
+    messages = json.load(f)
+  if len(messages['messages']) == 0:
+    return
+  num = 0
+  for message in messages['messages']:
+    if (message['receiver'] == username and message['status'] == 'unread'):
+      num+=1
+
+  if num > 0:
+    print("=======You have messages waiting for you=======")
+    
 def messageNotification(username):
   with open('inbox.json') as f:
     messages = json.load(f)

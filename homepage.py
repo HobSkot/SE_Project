@@ -5,6 +5,7 @@ from show_network import show_network
 import message
 
 def homepage(username, log_in):
+  message.checkMessages(username)
   message.messageNotification(username)
   choice2 = 1
   while (choice2 != 0):
