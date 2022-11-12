@@ -1,9 +1,10 @@
 # This file is to create a new InCollege account
 
-import verifi, json
+import verifi, json, time
+from notifys import newUser
 
 
-def newaccount(username, newPassword, first, last, university, major):
+def newaccount(username, newPassword, first, last, university, major, member):
 
     with open('students.json') as f:
         data = json.load(f)
@@ -33,21 +34,28 @@ def newaccount(username, newPassword, first, last, university, major):
       newPassword = input("Please create a strong password: ")
       boolNum = verifi.verifiPass(newPassword)
       
-    tempDict = {"username":username.lower(),"password":newPassword,"first":first.lower(), "last":last.lower(), "university":university.lower(), "major":major.lower()}
+    tempDict = {"username":username.lower(),"password":newPassword,"first":first.lower(), "last":last.lower(), "university":university.lower(), "major":major.lower(), "Membership":member.lower(), "lastApplyDate": int(time.time())}
     data['studentsLogin'].append(tempDict) # add new Info to database 
     
     with open('userSetting.json') as f:
       setting = json.load(f)
-  
+    
     tempDict = {"username": username.lower(), "email": "on", "sms": "on", "targetedAds": "on", "language": "eng"}
     setting['userSetting'].append(tempDict)
     print("bakak")
     with open('userFriends.json') as fp:    
       friend = json.load(fp)
+      
     #tempfriend = {"username": username.lower(), "Friends":[]}
     #tempfriend = {"username":username.lower(), "Friends":[]}
     friend['studentFriends'][username.lower()] = []
-
+    
+    # Next 3 lines of code add empty Notification box to studentNotification.json
+    with open('studentNotification.json') as fpw:
+      notificationData = json.load(fpw)
+    notificationData['studentNotifications'][username.lower()] = []
+    tempinfo = {"username": username.lower(), "newJob":" ", "newUser": " "}
+    notificationData['newNotify'].append(tempinfo)
 
     with open('students.json', "w") as f:
         json.dump(data, f)
@@ -57,6 +65,9 @@ def newaccount(username, newPassword, first, last, university, major):
 
     with open('userFriends.json', "w") as fp:
         json.dump(friend, fp)
+    with open('studentNotification.json', "w") as fpw:
+        json.dump(notificationData, fpw)
+
+    newUser(first, last)
 
     return 0
-

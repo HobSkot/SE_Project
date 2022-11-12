@@ -13,7 +13,7 @@ video.playVideo()
 
 while choice != 6:
   
-  choice = input("1: reLogin\n2: Create new account\n3: Connect to other InCollege users\n4. Useful Links\n5. Important Links\n\n")
+  choice = input("1: Login\n2: Create new account\n3: Connect to other InCollege users\n4. Useful Links\n5. Important Links\n\n")
   if (choice == "5"):
     important_links.importantLinks()
   if (choice == "4"): # Useful Links
@@ -30,7 +30,15 @@ while choice != 6:
     last = input("Enter your last name: ")
     univ = input("Enter your university: ")
     major = input("Enter your major: ")
-    newaccount.newaccount(name, password,first,last, univ,major)
+    membership = input("Would you like to join our membership for $10/month(Y/N):")
+    if membership.lower() == "y":
+        member = "Plus"
+    elif membership.lower() == "n":
+        member = "Standard"
+    else:
+        print("Invalid input")
+
+    newaccount.newaccount(name, password,first,last, univ,major,member)
     print("Congrats on your new account!")
     #Continue from here.
     break
@@ -41,6 +49,8 @@ while choice != 6:
       if result == 0:
           log_in = True
           homepage.homepage(username,log_in) 
+
+
 
 
 

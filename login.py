@@ -1,4 +1,7 @@
 import json, friendRquest
+from lastApply import lastApplyNotification
+from createProfileNotification import remindProfileNotification
+from notifys import show_notify
 
 
 def login_page(username, password, log_in = False):
@@ -9,6 +12,9 @@ def login_page(username, password, log_in = False):
             if (student['username'].lower() == username.lower() and student['password'] == password):
                 print("======You have successfully logged in======\n")
                 friendRquest.show_request(username)
+                lastApplyNotification(username)
+                remindProfileNotification(username)
+                show_notify(username)
                 log_in = True
                 return 0
 

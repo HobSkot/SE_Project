@@ -1,12 +1,1 @@
-{
-  "studentFriends": {
-    "sam": [
-      { "username": "kk", "name": "bob" },
-      { "username": "ee", "name": "bonk" }
-    ],
-    "kk": [{ "username": "sam", "name": "sam" }],
-    "ee": [{ "username": "sam", "name": "sam" }],
-    "aa": []
-  }
-}
-
+{"studentFriends": {"sam": [{"username": "li", "name": "li"}, {"username": "wyne", "name": "wyne"}], "li": [{"username": "sam", "name": "sam"}], "wyne": [{"username": "sam", "name": "sam"}], "crystal": [], "jason": [], "willy": []}}
