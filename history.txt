@@ -1,0 +1,10 @@
+* 9a0ab12 implemented functions in message.py file, added inbox.json
+* 0926dbe added one line of comment in jobSearch.py
+* ea308d3 EPIC#6
+* 23d3f8f Initial commit
+* 28b7e4f Added HI.TXT
+* a7c6a6b Added a text file for testing.
+* 7acd36b Added some nonsense to test.
+| * 7a35884 Whatever edits have been done so far @ 11:23am
+|/  
+* 4958fb7 Initial commit
