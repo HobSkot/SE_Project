@@ -1,3 +1,9 @@
+* b8e7df4 testProgramEpic8.py added
+* 898b5d7 Added jobsApplicatedNotification.py to say how many jobs have been applied for.
+* 2a08d70 Added createProfileNotification.py to remind user to "create a profile" if it doesn't exist yet.
+* 3450917 Added and finished lastApply.py - Also added "lastApplyDate" to students.json and added lastApply.py functionality where required (in jobSearch.py)
+* 14a717e Added lastLogin.py for notifications.
+* 990c6f6 Commiting changes. Long time since last commit.
 * 9a0ab12 implemented functions in message.py file, added inbox.json
 * 0926dbe added one line of comment in jobSearch.py
 * ea308d3 EPIC#6

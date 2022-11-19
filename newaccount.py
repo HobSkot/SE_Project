@@ -2,6 +2,7 @@
 
 import verifi, json, time
 from notifys import newUser
+from api_users_output import usersOutputAPI
 
 
 def newaccount(username, newPassword, first, last, university, major, member):
@@ -69,5 +70,7 @@ def newaccount(username, newPassword, first, last, university, major, member):
         json.dump(notificationData, fpw)
 
     newUser(first, last)
-
+    usersOutputAPI()
     return 0
+
+

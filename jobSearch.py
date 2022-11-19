@@ -2,6 +2,8 @@ import datetime, json
 from lastApply import updateApplyTime
 from jobsAppliedNotification import jobsAppliedNotification
 from notifys import getTitle
+from api_jobs_output import jobsOutputAPI
+from api_appliedjobs_output import appliedJobsOutputAPI
 
 
 def job(username, log_in):
@@ -241,7 +243,7 @@ def DeleteJob(username):
         json.dump(data, f)
     with open('savedJobs.json', 'w') as f:
         json.dump(savedJobs, f)
-
+    jobsOutputAPI()
 
 def ApplyJob(username):
     data = {}
@@ -359,6 +361,7 @@ def ApplyJob(username):
 
     with open('jobApplications.json', "w") as f:
         json.dump(application, f)
+    appliedJobsOutputAPI()
 
 
 def JobRemovedNotification(username):

@@ -5,6 +5,7 @@
 # a title, a major, a university name, a paragraph with information about the 
 # student, zero or more lines about their experience, and 1 or more lines about their education.
 import json
+from api_profiles_output import profilesOutputAPI
 experienceIndex = {"1":"title", "2":"employer","3":"startDate","4":"endDate","5":"location","6":"jobDescription"} # used for selecting what part of job person wishes to edit. ... i just loveee hardcoding c:
 
 
@@ -119,4 +120,5 @@ def edit_profile_menu(username):
       print("Invalid option\n")
   with open('profiles.json', "w") as f:
       json.dump(profiles, f)
+  profilesOutputAPI()
   
