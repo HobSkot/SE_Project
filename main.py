@@ -4,9 +4,11 @@ from api_jobs_output import jobsOutputAPI
 from api_profiles_output import profilesOutputAPI
 from api_users_output import usersOutputAPI
 from api_appliedjobs_output import appliedJobsOutputAPI
+from api_input_accounts import studentAccountInputAPI
+from api_jobs_input import newJobsAPI
 
-
-api_input_accounts.studentAccountInputAPI()
+newJobsAPI()
+studentAccountInputAPI()
 jobsOutputAPI()
 profilesOutputAPI()
 usersOutputAPI()

@@ -8,3 +8,9 @@ Actor
 =====
 programmer
 =====
+Riddler
+=====
+Batman
+=====
+Joker
+=====

@@ -3,6 +3,7 @@ from lastApply import updateApplyTime
 from jobsAppliedNotification import jobsAppliedNotification
 from notifys import getTitle
 from api_jobs_output import jobsOutputAPI
+from api_appliedjobs_output import appliedJobsOutputAPI
 
 
 def job(username, log_in):
@@ -360,6 +361,7 @@ def ApplyJob(username):
 
     with open('jobApplications.json', "w") as f:
         json.dump(application, f)
+    appliedJobsOutputAPI()
 
 
 def JobRemovedNotification(username):

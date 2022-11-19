@@ -22,3 +22,21 @@ pp
 tampa
 500
 =====
+Riddler
+Ask stupid questions
+Samuel
+Gotham City
+0
+=====
+Batman
+Vigilante &&&&&
+Samuel
+Gotham City
+0
+=====
+Joker
+Make Stupid Jokes
+Samuel
+Tampa
+1000
+=====

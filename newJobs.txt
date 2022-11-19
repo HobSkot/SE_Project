@@ -1,0 +1,35 @@
+Riddler
+Ask
+stupid
+questions
+&&&
+Sam
+Samuel
+Gotham City
+0
+=====
+Teacher
+Teaching
+&&&
+Sam
+Samuel
+Tampa
+3000
+=====
+Batman
+Vigilante
+&&&&&
+&&&
+Sam
+Samuel
+Gotham City
+0
+=====
+Joker
+Make Stupid Jokes
+&&&
+Sam
+Samuel
+Tampa
+1000
+=====
