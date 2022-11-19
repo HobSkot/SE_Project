@@ -1,0 +1,24 @@
+Teacher
+Teaching Games
+Bob
+NotHere
+2000
+=====
+Game designer
+Designing Game
+Gaben
+Valve
+10000
+=====
+Actor
+acting
+the rock
+usf
+1234
+=====
+programmer
+program
+pp
+tampa
+500
+=====
