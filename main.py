@@ -1,6 +1,18 @@
 import newaccount, homepage, login, video, connect, api_input_accounts
 import useful_links, OptionChoice, important_links
-api_input_accounts.studentAccountInputAPI()
+from api_jobs_output import jobsOutputAPI
+from api_profiles_output import profilesOutputAPI
+from api_users_output import usersOutputAPI
+from api_appliedjobs_output import appliedJobsOutputAPI
+from api_input_accounts import studentAccountInputAPI
+from api_jobs_input import newJobsAPI
+
+newJobsAPI()
+studentAccountInputAPI()
+jobsOutputAPI()
+profilesOutputAPI()
+usersOutputAPI()
+appliedJobsOutputAPI()
 choice = "0"
 log_in = False
 username = None

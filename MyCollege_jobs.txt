@@ -1,0 +1,42 @@
+Teacher
+Teaching Games
+Bob
+NotHere
+2000
+=====
+Game designer
+Designing Game
+Gaben
+Valve
+10000
+=====
+Actor
+acting
+the rock
+usf
+1234
+=====
+programmer
+program
+pp
+tampa
+500
+=====
+Riddler
+Ask stupid questions
+Samuel
+Gotham City
+0
+=====
+Batman
+Vigilante &&&&&
+Samuel
+Gotham City
+0
+=====
+Joker
+Make Stupid Jokes
+Samuel
+Tampa
+1000
+=====
